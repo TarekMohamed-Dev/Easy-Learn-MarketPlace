@@ -2,7 +2,7 @@
 import React from 'react';
 import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
-import { Presentation} from 'lucide-react'
+import { Presentation } from 'lucide-react'
 
 function Footer() {
   const { user } = useUser()
@@ -12,18 +12,18 @@ function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div>
-            <Link href="/">
-                    <h1 className="flex items-center gap-2 font-bold md:text-xl pl-3 md:pl-0" dir="ltr">
-                        <Presentation className="inline text-theme-color sm:w-[37px] sm:h-[37px]" />
-                        Easy Learn
-                    </h1>
-                </Link>
+              <Link href="/">
+                <h1 className="flex items-center gap-2 font-bold md:text-xl pl-3 md:pl-0" dir="ltr">
+                  <Presentation className="inline text-theme-color sm:w-[37px] sm:h-[37px]" />
+                  Easy Learn
+                </h1>
+              </Link>
             </div>
 
             <p className="mt-4 max-w-xs text-gray-500">
-            Welcome to Easy Learn. Every asset on our
-        platform is verified by our team to ensure our
-        highest quality standards.
+              Welcome to Easy Learn. Every asset on our
+              platform is verified by our team to ensure our
+              highest quality standards.
             </p>
 
             <ul className="mt-8 flex gap-6">

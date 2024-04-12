@@ -1,14 +1,21 @@
-const {default: axios} = require('axios')
+// Importing Axios library
+const { default: axios } = require('axios')
 
-const apiKey=process.env.NEXT_PUBLIC_REST_API_KEY;
-const apiUrl='http://localhost:1337/api'
+// Retrieving API key from environment variables
+const apiKey = process.env.NEXT_PUBLIC_REST_API_KEY;
 
+// API base URL
+const apiUrl = 'http://localhost:1337/api';
+
+// Creating an instance of Axios client with custom configuration
 const axiosClient = axios.create({
-	baseURL: apiUrl,
-	headers:{
-		Authorization: `Bearer ${apiKey}`
-	}
+    // Setting base URL for API requests
+    baseURL: apiUrl,
+    // Setting authorization header with API key
+    headers: {
+        Authorization: `Bearer ${apiKey}`
+    }
 });
 
-
-export default axiosClient
+// Exporting the configured Axios client instance
+export default axiosClient;

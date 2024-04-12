@@ -1,35 +1,40 @@
-'use client'
-import React, { useContext } from 'react'
-import { CartContext } from '../_context/CartContext'
-import CartApis from '../_utils/CartApis'
-import { useRouter } from 'next/navigation'
-import Image from "next/image"
+// Importing necessary modules
+import React, { useContext } from 'react';
+import { CartContext } from '../_context/CartContext';
+import CartApis from '../_utils/CartApis';
+import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 function Cart() {
-	const { cart, setCart } = useContext(CartContext)
-	const router = useRouter()
+	// Using CartContext to access cart data and setCart function
+	const { cart, setCart } = useContext(CartContext);
+	const router = useRouter();
+
+	// Function to calculate total amount of items in the cart
 	const getTotalAmount = () => {
 		let totalAmount = 0;
+
+		// Looping through each item in the cart and summing up their prices
 		cart.forEach(item => {
 			const price = Number(item?.product?.attributes?.price);
-			console.log(`Price for item ${item.id}: ${price}`);
 			totalAmount = totalAmount + price;
 		});
-		console.log(`Total amount before formatting: ${totalAmount}`);
 
-		// Format total amount to have 2 decimal places
+
+		// Formatting total amount to have 2 decimal places
 		const formattedTotal = totalAmount.toFixed(2);
-		console.log(`Total amount after formatting: ${formattedTotal}`);
-
 		return formattedTotal;
 	};
+
+	// Function to delete a cart item from the list
 	const deleteCartItemFromList = (id) => {
 		CartApis.deleteCartItem(id).then(res => {
-			if (res) setCart((oldCart) => oldCart.filter(item => item.id !== res?.data?.data?.id))
+			if (res) setCart((oldCart) => oldCart.filter(item => item.id !== res?.data?.data?.id));
 		}).catch(error => {
-			console.log('error', error)
-		})
-	}
+			console.log('error', error);
+		});
+	};
+
 	return (
 		<section>
 			<div className="mx-auto max-w-screen-xl px-4 pt-20 pb-8 sm:px-6  lg:px-8">
@@ -41,6 +46,7 @@ function Cart() {
 					<div className="mt-8">
 						<ul className="space-y-4">
 							{cart?.map((item) => (
+								// Rendering each item in the cart
 								<li key={item?.id} className="flex items-center gap-4">
 									<Image
 										src={item?.product?.attributes?.image?.data[0]?.attributes?.url}
@@ -59,14 +65,12 @@ function Cart() {
 												<dt className="inline">Category:</dt>
 												<dd className="inline">{item?.product?.attributes?.category}</dd>
 											</div>
-
-
 										</dl>
 									</div>
 
 									<div className="flex flex-1 items-center justify-end gap-2">
-
 										${item?.product?.attributes?.price}
+										{/* Button to remove an item from the cart */}
 										<button onClick={() => deleteCartItemFromList(item?.id)} className="text-gray-600 transition hover:text-red-600">
 											<span className="sr-only">Remove item</span>
 
@@ -91,6 +95,7 @@ function Cart() {
 
 						</ul>
 
+						{/* Cart summary */}
 						<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 							<div className="w-screen max-w-lg space-y-4">
 								<dl className="space-y-0.5 text-sm text-gray-700">
@@ -101,6 +106,7 @@ function Cart() {
 								</dl>
 
 								<div className="flex justify-end">
+									{/* Button to proceed to checkout */}
 									<button
 										onClick={() => router.push(`/checkout?amount=${getTotalAmount()}`)}
 										className="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
@@ -115,7 +121,7 @@ function Cart() {
 				</div>
 			</div>
 		</section>
-	)
+	);
 }
 
-export default Cart
+export default Cart;
